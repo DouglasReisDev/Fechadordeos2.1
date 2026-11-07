@@ -1,1021 +1,346 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fechamento de OS - Engenharia Clínica (Dark Pro)</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts - Inter & JetBrains Mono -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <!-- Lucide Icons CDN -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-          },
-          colors: {
-            slate: {
-              850: '#111827',
-              900: '#0f172a',
-              950: '#080d1a',
-            },
-            cyan: {
-              400: '#22d3ee',
-              500: '#06b6d4',
-              900: '#164e63',
-            }
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #080d1a;
-      color: #f1f5f9;
-    }
-    /* Custom Dark Scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #0f172a;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #334155;
-      border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #475569;
-    }
-    /* Glow Effects */
-    .glow-cyan {
-      box-shadow: 0 0 20px -5px rgba(6, 182, 212, 0.25);
-    }
-    .glow-card:hover {
-      box-shadow: 0 4px 20px -2px rgba(6, 182, 212, 0.15);
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fechamento de OS - Engenharia Clínica</title>
+<style>
+:root{--bg:#080d1a;--sf:#0f172a;--sf2:#0b1222;--ln:#1e293b;--ink:#f1f5f9;--mu:#94a3b8;--ac:#22d3ee;--ok:#34d399;--nc:#fb7185;--hl:#5b4b12;color-scheme:dark}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+header{position:sticky;top:0;z-index:5;background:rgba(15,23,42,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--ln)}
+.hd{max-width:1180px;margin:0 auto;padding:12px 20px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between}
+h1{font-size:17px;margin:0;font-weight:700;letter-spacing:.2px}.hd p{margin:0;color:var(--mu);font-size:12px}
+#sq{width:min(380px,100%);background:var(--bg);border:1px solid #334155;border-radius:10px;padding:9px 12px}
+main{max-width:1180px;margin:0 auto;padding:20px 20px 60px}
+nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:12px;border-bottom:1px solid var(--ln);margin-bottom:24px}
+nav button{flex:none;background:none;border:1px solid transparent;border-radius:10px;color:var(--mu);padding:8px 14px;font-weight:500}
+nav button:hover{color:var(--ink);background:var(--sf)}
+nav button[aria-selected=true]{color:var(--ac);background:#0c2a35;border-color:#155e75}
+.sec{margin-bottom:34px}
+.sh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.sh h2{font-size:16px;margin:0}.sh p{margin:2px 0 0;color:var(--mu);font-size:12px}
+.chip0{font:12px ui-monospace,Menlo,Consolas,monospace;color:var(--mu);border:1px solid var(--ln);border-radius:6px;padding:2px 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.card{--cc:hsl(var(--h) 70% 62%);display:flex;flex-direction:column;gap:6px;padding:16px;border-radius:12px;border:1px solid color-mix(in srgb,var(--cc) 28%,var(--ln));border-top:4px solid var(--cc);background:color-mix(in srgb,var(--cc) 6%,var(--sf))}
+.kd{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;font-size:12px;font-weight:600;color:var(--cc)}
+.kd:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--cc)}
+.card h3{margin:0;font-size:15px}.card p{margin:0 0 6px;color:var(--mu);font-size:12.5px;flex:1}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.b{display:inline-flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--ln);border-radius:999px;padding:6px 14px;font-size:13px}
+.b:hover{border-color:var(--cc,var(--ac));background:color-mix(in srgb,var(--cc,var(--ac)) 16%,var(--bg))}
+.b i{width:8px;height:8px;border-radius:50%;background:var(--mu)}.b.ok i{background:var(--ok)}.b.nc i{background:var(--nc)}
+.tw{border:1px solid var(--ln);border-radius:12px;background:var(--sf);overflow:auto;max-height:460px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{position:sticky;top:0;background:var(--sf2);text-align:left;color:var(--mu);font-weight:500;padding:10px 14px}
+td{padding:9px 14px;border-top:1px solid var(--ln)}td:first-child{font:600 12.5px ui-monospace,Menlo,Consolas,monospace;color:var(--ac);white-space:nowrap}
+td:last-child{white-space:nowrap;text-align:right}
+.sm{background:var(--bg);border:1px solid #334155;border-radius:8px;padding:3px 10px;font-size:12px}.sm:hover{border-color:var(--ac)}
+#pf{width:min(260px,100%);background:var(--sf);border:1px solid #334155;border-radius:10px;padding:7px 12px;font-size:13px}
+.empty{padding:30px;text-align:center;color:var(--mu)}
+dialog{--cc:hsl(var(--h,190) 70% 62%);background:var(--sf);color:var(--ink);border:1px solid var(--ln);border-radius:14px;padding:0;width:min(600px,calc(100% - 24px));max-height:calc(100% - 24px)}
+dialog::backdrop{background:rgba(4,8,16,.75);backdrop-filter:blur(4px)}
+.mh{display:flex;justify-content:space-between;gap:12px;padding:16px 20px;border-top:4px solid var(--cc);border-radius:14px 14px 0 0;background:var(--sf2);border-bottom:1px solid var(--ln)}
+.mh h2{margin:0;font-size:16px}.mh p{margin:2px 0 0;font-size:12.5px;font-weight:600;color:var(--cc)}
+.x{background:none;border:0;font-size:24px;line-height:1;color:var(--mu);align-self:flex-start}
+.mb{padding:16px 20px}.fld{margin-bottom:12px}.fld label,.lb{display:block;font-size:12.5px;color:var(--mu);margin-bottom:4px}
+.fld input,textarea{width:100%;background:var(--bg);border:1px solid #334155;border-radius:8px;padding:8px 10px}
+textarea{font:13px/1.6 ui-monospace,Menlo,Consolas,monospace;resize:vertical}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.ch{border:0;border-radius:6px;background:color-mix(in srgb,var(--cc) 18%,var(--bg));color:var(--cc);font-size:12.5px;padding:3px 10px}
+.ch.sv{background:none;border:1px dashed #334155;color:var(--mu)}.ch s{text-decoration:none;opacity:.6;margin-left:6px}
+.mfo{display:flex;justify-content:flex-end;gap:8px;padding:12px 20px 16px;background:var(--sf2);border-top:1px solid var(--ln);border-radius:0 0 14px 14px}
+.p,.s{border-radius:10px;padding:9px 18px}.p{background:var(--cc);border:0;color:#06101a;font-weight:700}.s{background:none;border:1px solid #334155;color:var(--mu)}
+.ha{display:flex;gap:8px;flex:1;justify-content:flex-end;min-width:260px}.ha .s{padding:8px 14px;white-space:nowrap}
+.grid.eq{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}.grid.eq .card h3{font-size:14px;margin-bottom:6px}
+#hl{max-height:60vh;overflow:auto}.hi{border:1px solid var(--ln);border-radius:10px;padding:10px 12px;margin-bottom:10px;background:var(--bg)}
+.hm{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--mu)}.hm b{color:var(--ink);font-weight:600}
+.hi p{margin:6px 0 8px;font-size:12.5px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+#toast{position:fixed;right:20px;bottom:20px;background:var(--sf);border:1px solid #334155;border-radius:10px;padding:10px 16px;font-size:13px;opacity:0;transform:translateY(12px);pointer-events:none;transition:.25s;z-index:99;max-width:calc(100% - 40px)}
+#toast.on{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){#toast{transition:none}}
+</style>
 </head>
-<body class="bg-slate-950 text-slate-100 antialiased min-h-screen flex flex-col selection:bg-cyan-500 selection:text-slate-950">
-
-  <!-- Header / Navbar Dark -->
-  <header class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800/80 sticky top-0 z-30 shadow-xl">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-      
-      <div class="flex items-center gap-3">
-        <div class="p-2.5 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl shadow-lg shadow-cyan-500/20 text-slate-950 flex items-center justify-center font-bold">
-          <i data-lucide="activity" class="w-6 h-6 stroke-[2.5]"></i>
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <h1 class="font-extrabold text-lg tracking-tight text-white">ENG CLINICAL</h1>
-            <span class="px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase bg-cyan-950 text-cyan-400 border border-cyan-800/50 rounded-full">PRO v2.0</span>
-          </div>
-          <p class="text-xs text-slate-400 font-medium">Assistente de Fechamento de Ordens de Serviço</p>
-        </div>
-      </div>
-
-      <!-- Live Search Bar -->
-      <div class="relative w-full sm:w-96">
-        <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
-        <input 
-          type="text" 
-          id="globalSearch" 
-          placeholder="Pesquisar modelos, POPs, procedimentos..." 
-          class="w-full bg-slate-950/80 text-slate-100 text-sm pl-10 pr-10 py-2.5 rounded-xl border border-slate-700/70 focus:outline-none focus:ring-2 focus:ring-cyan-500/80 focus:border-cyan-500 transition-all placeholder:text-slate-500 shadow-inner"
-        />
-        <button id="clearSearch" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors">
-          <i data-lucide="x" class="w-4 h-4"></i>
-        </button>
-      </div>
-
-    </div>
-  </header>
-
-  <!-- Container Principal -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
-
-    <!-- Navegação de Abas -->
-    <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
-      <nav class="flex items-center space-x-1.5 sm:space-x-2 overflow-x-auto pb-1 w-full md:w-auto" id="navTabs">
-        <button data-target="section-all" class="tab-btn px-4 py-2.5 rounded-xl text-xs font-bold text-cyan-400 bg-cyan-950/60 border border-cyan-500/40 transition-all flex items-center gap-2 whitespace-nowrap shadow-sm">
-          <i data-lucide="layout-grid" class="w-4 h-4"></i> Todos
-        </button>
-        <button data-target="section-calib" class="tab-btn px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-900 border border-transparent transition-all flex items-center gap-2 whitespace-nowrap">
-          <i data-lucide="sliders" class="w-4 h-4 text-blue-400"></i> Calibração
-        </button>
-        <button data-target="section-tse" class="tab-btn px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-900 border border-transparent transition-all flex items-center gap-2 whitespace-nowrap">
-          <i data-lucide="shield-check" class="w-4 h-4 text-amber-400"></i> TSE
-        </button>
-        <button data-target="section-prev" class="tab-btn px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-900 border border-transparent transition-all flex items-center gap-2 whitespace-nowrap">
-          <i data-lucide="wrench" class="w-4 h-4 text-indigo-400"></i> Preventiva
-        </button>
-        <button data-target="section-pressao" class="tab-btn px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-900 border border-transparent transition-all flex items-center gap-2 whitespace-nowrap">
-          <i data-lucide="heart-pulse" class="w-4 h-4 text-emerald-400"></i> Aparelho de Pressão
-        </button>
-        <button data-target="section-nao" class="tab-btn px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-900 border border-transparent transition-all flex items-center gap-2 whitespace-nowrap">
-          <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-400"></i> Ocorrências
-        </button>
-        <button data-target="section-pops" class="tab-btn px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-900 border border-transparent transition-all flex items-center gap-2 whitespace-nowrap">
-          <i data-lucide="book-open" class="w-4 h-4 text-cyan-400"></i> Catálogo de POPs
-        </button>
-      </nav>
-
-      <div class="text-xs text-slate-400 font-medium hidden lg:flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
-        <i data-lucide="zap" class="w-3.5 h-3.5 text-cyan-400"></i>
-        <span>Clique nos botões para preencher parâmetros e copiar rapidamente.</span>
-      </div>
-    </div>
-
-    <!-- MAIN CONTENT GRID -->
-    <div id="mainContent" class="space-y-10">
-
-      <!-- 1. CALIBRAÇÃO SEÇÃO -->
-      <section id="section-calib" class="category-section space-y-4">
-        <div class="flex items-center justify-between border-l-4 border-blue-500 pl-3 py-1">
-          <div>
-            <h2 class="text-base font-bold text-white tracking-wide">CALIBRAÇÃO</h2>
-            <p class="text-xs text-slate-400">Ensaios de calibração conduzidos segundo diretrizes do PRS ENG 04</p>
-          </div>
-          <span class="text-[10px] font-mono px-2 py-1 bg-blue-950 text-blue-400 border border-blue-800/60 rounded">PRS ENG 04</span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          
-          <!-- Card: AC - Eng Clínica -->
-          <div class="card-item bg-slate-900/90 p-5 rounded-2xl border border-slate-800 hover:border-slate-700 transition-all glow-card flex flex-col justify-between space-y-4">
-            <div class="space-y-2">
-              <div class="flex justify-between items-center">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-blue-400 bg-blue-950/80 px-2.5 py-1 rounded-md border border-blue-800/50">Engenharia Clínica</span>
-                <span class="text-xs text-slate-400 font-medium">Análise Crítica</span>
-              </div>
-              <h3 class="font-bold text-slate-100 text-sm">Análise Crítica de Calibração</h3>
-              <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">Conduzida pela equipe interna conforme PRS ENG 04 e tabela de critérios de aceitação.</p>
-            </div>
-            <div class="grid grid-cols-2 gap-2.5 pt-2">
-              <button onclick="openModal('calib-ac-ec-conf')" class="py-2.5 px-3 bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-400 border border-emerald-700/50 font-semibold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all active:scale-[0.98]">
-                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Conforme
-              </button>
-              <button onclick="openModal('calib-ac-ec-nconf')" class="py-2.5 px-3 bg-rose-950/50 hover:bg-rose-900/60 text-rose-400 border border-rose-700/50 font-semibold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all active:scale-[0.98]">
-                <i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Não Conforme
-              </button>
-            </div>
-          </div>
-
-          <!-- Card: AC - Terceiros -->
-          <div class="card-item bg-slate-900/90 p-5 rounded-2xl border border-slate-800 hover:border-slate-700 transition-all glow-card flex flex-col justify-between space-y-4">
-            <div class="space-y-2">
-              <div class="flex justify-between items-center">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-purple-400 bg-purple-950/80 px-2.5 py-1 rounded-md border border-purple-800/50">Empresa Terceirizada</span>
-                <span class="text-xs text-slate-400 font-medium">Análise Crítica</span>
-              </div>
-              <h3 class="font-bold text-slate-100 text-sm">Análise Crítica por Terceiros</h3>
-              <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">Realizada por empresa contratada. Requer informar a razão social/nome da empresa.</p>
-            </div>
-            <div class="grid grid-cols-2 gap-2.5 pt-2">
-              <button onclick="openModal('calib-ac-terc-conf')" class="py-2.5 px-3 bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-400 border border-emerald-700/50 font-semibold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all active:scale-[0.98]">
-                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Conforme
-              </button>
-              <button onclick="openModal('calib-ac-terc-nconf')" class="py-2.5 px-3 bg-rose-950/50 hover:bg-rose-900/60 text-rose-400 border border-rose-700/50 font-semibold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all active:scale-[0.98]">
-                <i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Não Conforme
-              </button>
-            </div>
-          </div>
-
-          <!-- Card: DS - Eng Clínica -->
-          <div class="card-item bg-slate-900/90 p-5 rounded-2xl border border-slate-800 hover:border-slate-700 transition-all glow-card flex flex-col justify-between space-y-4">
-            <div class="space-y-2">
-              <div class="flex justify-between items-center">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-blue-400 bg-blue-950/80 px-2.5 py-1 rounded-md border border-blue-800/50">Engenharia Clínica</span>
-                <span class="text-xs text-slate-400 font-medium">Descrição de Serviço</span>
-              </div>
-              <h3 class="font-bold text-slate-100 text-sm">Descrição de Serviço Calibração</h3>
-              <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">Laudo de execução com certificado CAL/ENGXXXX-XX anexo.</p>
-            </div>
-            <div class="grid grid-cols-2 gap-2.5 pt-2">
-              <button onclick="openModal('calib-ds-ec-conf')" class="py-2.5 px-3 bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-400 border border-emerald-700/50 font-semibold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all active:scale-[0.98]">
-                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Conforme
-              </button>
-              <button onclick="openModal('calib-ds-ec-nconf')" class="py-2.5 px-3 bg-rose-950/50 hover:bg-rose-900/60 text-rose-400 border border-rose-700/50 font-semibold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all active:scale-[0.98]">
-                <i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Não Conforme
-              </button>
-            </div>
-          </div>
-
-          <!-- Card: DS - Terceiros -->
-          <div class="card-item bg-slate-900/90 p-5 rounded-2xl border border-slate-800 hover:border-slate-700 transition-all glow-card flex flex-col justify-between space-y-4">
-            <div class="space-y-2">
-              <div class="flex justify-between items-center">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-purple-400 bg-purple-950/80 px-2.5 py-1 rounded-md border border-purple-800/50">Empresa Terceirizada</span>
-                <span class="text-xs text-slate-400 font-medium">Descrição de Serviço</span>
-              </div>
-              <h3 class="font-bold text-slate-100 text-sm">Descrição de Serviço Calibração</h3>
-              <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">Calibração executada por terceiros com anexo de certificado.</p>
-            </div>
-            <div class="grid grid-cols-2 gap-2.5 pt-2">
-              <button onclick="openModal('calib-ds-terc-conf')" class="py-2.5 px-3 bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-400 border border-emerald-700/50 font-semibold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all active:scale-[0.98]">
-                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Conforme
-              </button>
-              <button onclick="openModal('calib-ds-terc-nconf')" class="py-2.5 px-3 bg-rose-950/50 hover:bg-rose-900/60 text-rose-400 border border-rose-700/50 font-semibold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all active:scale-[0.98]">
-                <i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Não Conforme
-              </button>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- 2. TESTE DE SEGURANÇA ELÉTRICA (TSE) -->
-      <section id="section-tse" class="category-section space-y-4">
-        <div class="flex items-center justify-between border-l-4 border-amber-500 pl-3 py-1">
-          <div>
-            <h2 class="text-base font-bold text-white tracking-wide">TESTE DE SEGURANÇA ELÉTRICA (TSE)</h2>
-            <p class="text-xs text-slate-400">Normas ABNT (IEC 60601-1 / IEC 62353) & POP ENG 068</p>
-          </div>
-          <span class="text-[10px] font-mono px-2 py-1 bg-amber-950 text-amber-400 border border-amber-800/60 rounded">POP ENG 068</span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          
-          <!-- Card: TSE Análise Crítica -->
-          <div class="card-item bg-slate-900/90 p-5 rounded-2xl border border-slate-800 hover:border-slate-700 transition-all glow-card flex flex-col justify-between space-y-4">
-            <div class="space-y-2">
-              <div class="flex justify-between items-center">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-amber-950/80 px-2.5 py-1 rounded-md border border-amber-800/50">Normas ABNT</span>
-                <span class="text-xs text-slate-400 font-medium">Análise Crítica</span>
-              </div>
-              <h3 class="font-bold text-slate-100 text-sm">Análise Crítica de Segurança Elétrica</h3>
-              <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">Conformidade com os ensaios de corrente de fuga, resistência de aterramento e isolamento.</p>
-            </div>
-            <div class="grid grid-cols-2 gap-2.5 pt-2">
-              <button onclick="openModal('tse-ac-conf')" class="py-2.5 px-3 bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-400 border border-emerald-700/50 font-semibold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all active:scale-[0.98]">
-                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Conforme
-              </button>
-              <button onclick="openModal('tse-ac-nconf')" class="py-2.5 px-3 bg-rose-950/50 hover:bg-rose-900/60 text-rose-400 border border-rose-700/50 font-semibold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all active:scale-[0.98]">
-                <i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Não Conforme
-              </button>
-            </div>
-          </div>
-
-          <!-- Card: TSE Descrição de Serviço -->
-          <div class="card-item bg-slate-900/90 p-5 rounded-2xl border border-slate-800 hover:border-slate-700 transition-all glow-card flex flex-col justify-between space-y-4">
-            <div class="space-y-2">
-              <div class="flex justify-between items-center">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-amber-950/80 px-2.5 py-1 rounded-md border border-amber-800/50">Certificação</span>
-                <span class="text-xs text-slate-400 font-medium">Descrição de Serviço</span>
-              </div>
-              <h3 class="font-bold text-slate-100 text-sm">Descrição de Serviço TSE</h3>
-              <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">Laudo descritivo de TSE com inclusão de número de certificado TSE/ENGXXXX-24 em anexo.</p>
-            </div>
-            <div class="grid grid-cols-2 gap-2.5 pt-2">
-              <button onclick="openModal('tse-ds-conf')" class="py-2.5 px-3 bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-400 border border-emerald-700/50 font-semibold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all active:scale-[0.98]">
-                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Conforme
-              </button>
-              <button onclick="openModal('tse-ds-nconf')" class="py-2.5 px-3 bg-rose-950/50 hover:bg-rose-900/60 text-rose-400 border border-rose-700/50 font-semibold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all active:scale-[0.98]">
-                <i data-lucide="x-circle" class="w-3.5 h-3.5"></i> Não Conforme
-              </button>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- 3. PREVENTIVAS -->
-      <section id="section-prev" class="category-section space-y-4">
-        <div class="flex items-center justify-between border-l-4 border-indigo-500 pl-3 py-1">
-          <div>
-            <h2 class="text-base font-bold text-white tracking-wide">MANUTENÇÕES PREVENTIVAS</h2>
-            <p class="text-xs text-slate-400">Manutenções periódicas programadas por POP específico</p>
-          </div>
-          <span class="text-[10px] font-mono px-2 py-1 bg-indigo-950 text-indigo-400 border border-indigo-800/60 rounded">POP GERAL</span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-          <div class="card-item bg-slate-900/90 p-5 rounded-2xl border border-slate-800 hover:border-slate-700 transition-all glow-card flex flex-col justify-between space-y-4 md:col-span-2">
-            <div class="space-y-2">
-              <div class="flex justify-between items-center">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-400 bg-indigo-950/80 px-2.5 py-1 rounded-md border border-indigo-800/50">Procedimento Geral</span>
-                <span class="text-xs text-slate-400 font-medium">Descrição de Serviço</span>
-              </div>
-              <h3 class="font-bold text-slate-100 text-sm">Manutenção Preventiva Padrão</h3>
-              <p class="text-xs text-slate-400 leading-relaxed">Modelo padrão para fechar OS de preventiva informando o número do POP e, em caso de não conformidade, detalhando a avaria detectada.</p>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-              <button onclick="openModal('prev-ds-conf')" class="py-3 px-4 bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-400 border border-emerald-700/50 font-semibold text-xs rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
-                <i data-lucide="check-circle-2" class="w-4 h-4"></i> Preventiva Conforme (Com Seleção de POP)
-              </button>
-              <button onclick="openModal('prev-ds-nconf')" class="py-3 px-4 bg-rose-950/50 hover:bg-rose-900/60 text-rose-400 border border-rose-700/50 font-semibold text-xs rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
-                <i data-lucide="x-circle" class="w-4 h-4"></i> Preventiva Não Conforme (Com Descrição de Avaria)
-              </button>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- 4. APARELHO DE PRESSÃO -->
-      <section id="section-pressao" class="category-section space-y-4">
-        <div class="flex items-center justify-between border-l-4 border-emerald-500 pl-3 py-1">
-          <div>
-            <h2 class="text-base font-bold text-white tracking-wide">APARELHO DE PRESSÃO (ESFIGMOMANÔMETRO)</h2>
-            <p class="text-xs text-slate-400">Calibração e verificação conduzida com base nas diretrizes do POP ENG 034</p>
-          </div>
-          <span class="text-[10px] font-mono px-2 py-1 bg-emerald-950 text-emerald-400 border border-emerald-800/60 rounded">POP ENG 034</span>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          
-          <div class="card-item bg-slate-900/90 p-4 rounded-2xl border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between space-y-3">
-            <div>
-              <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800/40">Análise Crítica</span>
-              <h4 class="font-bold text-slate-100 text-xs mt-2">AC - Conforme</h4>
-              <p class="text-[11px] text-slate-400 mt-1">Valores dentro dos limites aceitáveis. Apto para uso.</p>
-            </div>
-            <button onclick="openModal('press-ac-conf')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-emerald-400 font-semibold text-xs rounded-xl border border-slate-700 flex items-center justify-center gap-1.5 transition-colors">
-              <i data-lucide="copy" class="w-3.5 h-3.5"></i> Usar Texto
-            </button>
-          </div>
-
-          <div class="card-item bg-slate-900/90 p-4 rounded-2xl border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between space-y-3">
-            <div>
-              <span class="text-[9px] font-bold uppercase tracking-wider text-rose-400 bg-rose-950/80 px-2 py-0.5 rounded border border-rose-800/40">Análise Crítica</span>
-              <h4 class="font-bold text-slate-100 text-xs mt-2">AC - Não Conforme</h4>
-              <p class="text-[11px] text-slate-400 mt-1">Valores fora da tolerância. Inapto para uso.</p>
-            </div>
-            <button onclick="openModal('press-ac-nconf')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 font-semibold text-xs rounded-xl border border-slate-700 flex items-center justify-center gap-1.5 transition-colors">
-              <i data-lucide="copy" class="w-3.5 h-3.5"></i> Usar Texto
-            </button>
-          </div>
-
-          <div class="card-item bg-slate-900/90 p-4 rounded-2xl border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between space-y-3">
-            <div>
-              <span class="text-[9px] font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/80 px-2 py-0.5 rounded border border-cyan-800/40">Descrição Serviço</span>
-              <h4 class="font-bold text-slate-100 text-xs mt-2">DS - Conforme</h4>
-              <p class="text-[11px] text-slate-400 mt-1">Execução conforme com número de certificado editável.</p>
-            </div>
-            <button onclick="openModal('press-ds-conf')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-cyan-400 font-semibold text-xs rounded-xl border border-slate-700 flex items-center justify-center gap-1.5 transition-colors">
-              <i data-lucide="copy" class="w-3.5 h-3.5"></i> Usar Texto
-            </button>
-          </div>
-
-          <div class="card-item bg-slate-900/90 p-4 rounded-2xl border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between space-y-3">
-            <div>
-              <span class="text-[9px] font-bold uppercase tracking-wider text-rose-400 bg-rose-950/80 px-2 py-0.5 rounded border border-rose-800/40">Descrição Serviço</span>
-              <h4 class="font-bold text-slate-100 text-xs mt-2">DS - Não Conforme</h4>
-              <p class="text-[11px] text-slate-400 mt-1">Fora dos limites durante manutenção programada.</p>
-            </div>
-            <button onclick="openModal('press-ds-nconf')" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-rose-400 font-semibold text-xs rounded-xl border border-slate-700 flex items-center justify-center gap-1.5 transition-colors">
-              <i data-lucide="copy" class="w-3.5 h-3.5"></i> Usar Texto
-            </button>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- 5. OCORRÊNCIAS / NÃO REALIZADOS -->
-      <section id="section-nao" class="category-section space-y-4">
-        <div class="flex items-center justify-between border-l-4 border-rose-500 pl-3 py-1">
-          <div>
-            <h2 class="text-base font-bold text-white tracking-wide">OCORRÊNCIAS & IMPEDIMENTOS</h2>
-            <p class="text-xs text-slate-400">Justificativas padrão para não realização da manutenção no mês</p>
-          </div>
-          <span class="text-[10px] font-mono px-2 py-1 bg-rose-950 text-rose-400 border border-rose-800/60 rounded">IMPEDIMENTOS</span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-
-          <div class="card-item bg-slate-900/90 p-5 rounded-2xl border border-slate-800 hover:border-slate-700 transition-all glow-card flex flex-col justify-between space-y-4">
-            <div class="space-y-2">
-              <span class="text-[10px] font-bold uppercase tracking-wider text-rose-400 bg-rose-950/80 px-2.5 py-1 rounded-md border border-rose-800/50">Motivo Específico</span>
-              <h3 class="font-bold text-slate-100 text-sm">Não Realizado</h3>
-              <p class="text-xs text-slate-400 leading-relaxed">Para impedimentos técnicos ou operacionais justificáveis.</p>
-            </div>
-            <button onclick="openModal('ocorr-nao-realizado')" class="w-full py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs rounded-xl border border-slate-700 flex items-center justify-center gap-2 transition-colors">
-              <i data-lucide="edit-3" class="w-3.5 h-3.5 text-cyan-400"></i> Preencher Motivo & Copiar
-            </button>
-          </div>
-
-          <div class="card-item bg-slate-900/90 p-5 rounded-2xl border border-slate-800 hover:border-slate-700 transition-all glow-card flex flex-col justify-between space-y-4">
-            <div class="space-y-2">
-              <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-amber-950/80 px-2.5 py-1 rounded-md border border-amber-800/50">Ausência no Setor</span>
-              <h3 class="font-bold text-slate-100 text-sm">Não Localizado</h3>
-              <p class="text-xs text-slate-400 leading-relaxed">Equipamento não foi localizado no setor no mês vigente.</p>
-            </div>
-            <button onclick="openModal('ocorr-nao-localizado')" class="w-full py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs rounded-xl border border-slate-700 flex items-center justify-center gap-2 transition-colors">
-              <i data-lucide="copy" class="w-3.5 h-3.5 text-cyan-400"></i> Copiar Texto Pronto
-            </button>
-          </div>
-
-          <div class="card-item bg-slate-900/90 p-5 rounded-2xl border border-slate-800 hover:border-slate-700 transition-all glow-card flex flex-col justify-between space-y-4">
-            <div class="space-y-2">
-              <span class="text-[10px] font-bold uppercase tracking-wider text-purple-400 bg-purple-950/80 px-2.5 py-1 rounded-md border border-purple-800/50">Em Uso pelo Setor</span>
-              <h3 class="font-bold text-slate-100 text-sm">Não Disponibilizado</h3>
-              <p class="text-xs text-slate-400 leading-relaxed">Setor solicitante não liberou o aparelho para a preventiva.</p>
-            </div>
-            <button onclick="openModal('ocorr-nao-disponibilizado')" class="w-full py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs rounded-xl border border-slate-700 flex items-center justify-center gap-2 transition-colors">
-              <i data-lucide="copy" class="w-3.5 h-3.5 text-cyan-400"></i> Copiar Texto Pronto
-            </button>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- 6. CATÁLOGO COMPLETO DE POPS -->
-      <section id="section-pops" class="category-section space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-l-4 border-cyan-500 pl-3 py-1">
-          <div>
-            <h2 class="text-base font-bold text-white tracking-wide">CATÁLOGO DE POPS (POP ENG 001 AO 088)</h2>
-            <p class="text-xs text-slate-400">Biblioteca oficial de Procedimentos Operacionais Padrão</p>
-          </div>
-          <div class="relative w-full sm:w-64">
-            <input 
-              type="text" 
-              id="popFilterInput" 
-              placeholder="Filtrar POP (ex: 023, Hemodiálise)..." 
-              class="w-full bg-slate-900 text-xs px-3 py-2 rounded-xl border border-slate-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 text-slate-200 placeholder:text-slate-500"
-            />
-          </div>
-        </div>
-
-        <div class="bg-slate-900/90 rounded-2xl shadow-xl border border-slate-800 overflow-hidden">
-          <div class="max-h-[450px] overflow-y-auto">
-            <table class="w-full text-left border-collapse text-xs">
-              <thead class="bg-slate-950 text-slate-400 sticky top-0 border-b border-slate-800 font-bold uppercase tracking-wider text-[11px]">
-                <tr>
-                  <th class="py-3.5 px-4 w-32">Código</th>
-                  <th class="py-3.5 px-4">Descrição do Procedimento Operacional Padrão</th>
-                  <th class="py-3.5 px-4 text-center w-44">Ações Rápidas</th>
-                </tr>
-              </thead>
-              <tbody id="popTableBody" class="divide-y divide-slate-800/60 text-slate-300 font-sans">
-                <!-- POPs Renderizados dinamicamente -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-    </div>
-
-  </main>
-
-  <!-- MODAL INTELIGENTE DE PREENCHIMENTO E CÓPIA -->
-  <div id="textModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden transition-opacity duration-200">
-    <div class="bg-slate-900 rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden flex flex-col transform transition-transform scale-95 border border-slate-800 glow-cyan">
-      
-      <!-- Header do Modal -->
-      <div class="px-6 py-4 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
-        <div class="flex items-center gap-2.5">
-          <div class="p-1.5 bg-cyan-950 text-cyan-400 rounded-lg border border-cyan-800/40">
-            <i data-lucide="file-edit" class="w-4 h-4"></i>
-          </div>
-          <h3 id="modalTitle" class="font-bold text-sm text-white tracking-wide">Título do Modelo</h3>
-        </div>
-        <button onclick="closeModal()" class="text-slate-400 hover:text-white transition-colors">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-
-      <!-- Corpo do Modal -->
-      <div class="p-6 space-y-4 bg-slate-900">
-        
-        <!-- Campos de Variáveis Dinâmicas -->
-        <div id="dynamicInputsContainer" class="hidden space-y-3 bg-slate-950/70 p-3.5 rounded-xl border border-slate-800">
-          <span class="text-[11px] font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-1.5">
-            <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i> Parâmetros Personalizados
-          </span>
-          <div id="dynamicInputsList" class="space-y-2">
-            <!-- Inputs gerados via JS -->
-          </div>
-        </div>
-
-        <!-- Área de Texto com a OS final -->
-        <div class="space-y-1.5">
-          <label class="text-xs font-semibold text-slate-400 flex items-center justify-between">
-            <span>Resultado Final do Texto da OS:</span>
-            <span class="text-[10px] text-slate-500 font-mono">Pronto para copiar</span>
-          </label>
-          <textarea 
-            id="modalTextarea" 
-            rows="6" 
-            class="w-full bg-slate-950 text-slate-100 font-mono text-xs p-3.5 rounded-xl border border-slate-700/80 focus:outline-none focus:ring-2 focus:ring-cyan-500 leading-relaxed shadow-inner"
-          ></textarea>
-        </div>
-
-      </div>
-
-      <!-- Rodapé do Modal -->
-      <div class="px-6 py-4 bg-slate-950 border-t border-slate-800 flex items-center justify-end gap-3">
-        <button onclick="closeModal()" class="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors">
-          Cancelar
-        </button>
-        <button id="copyModalBtn" onclick="copyFromModal()" class="px-5 py-2.5 text-xs font-bold text-slate-950 bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-300 hover:to-cyan-400 active:scale-[0.98] rounded-xl shadow-lg shadow-cyan-500/20 flex items-center gap-2 transition-all">
-          <i data-lucide="copy" class="w-4 h-4"></i> Copiar Texto Formatado
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- NOTIFICAÇÃO TOAST NEON -->
-  <div id="toast" class="fixed bottom-5 right-5 z-50 bg-slate-900 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl border border-slate-700 flex items-center gap-3 translate-y-16 opacity-0 transition-all duration-300">
-    <div class="p-1.5 bg-emerald-950 text-emerald-400 rounded-lg border border-emerald-800/40">
-      <i data-lucide="check-circle" class="w-4 h-4"></i>
-    </div>
-    <span id="toastMessage">Copiado com sucesso!</span>
-  </div>
-
-  <script>
-    // LISTA DE POPS COMPLETA DO DOCUMENTO
-    const POPS_DATA = [
-      { code: "POP ENG 001", name: "Tratamento de solicitações de serviço" },
-      { code: "POP ENG 002", name: "Atualizações e Revisões de Cronogramas de Manutenções Programadas" },
-      { code: "POP ENG 003", name: "Aquisição, Avaliação, Especificação, Recebimento, Instalação e Treinamento" },
-      { code: "POP ENG 004", name: "Manutenção Preventiva em Monitores Multiparâmetros" },
-      { code: "POP ENG 005", name: "Manutenção Preventiva em Cardioversores" },
-      { code: "POP ENG 006", name: "Manutenção Preventiva em Carrinhos de Anestesia" },
-      { code: "POP ENG 007", name: "Manutenção Preventiva em Oxímetros" },
-      { code: "POP ENG 008", name: "Manutenção Preventiva em Bisturis" },
-      { code: "POP ENG 009", name: "Manutenção Preventiva em Focos Cirúrgicos" },
-      { code: "POP ENG 010", name: "Manutenção Preventiva em Mesas Cirúrgicas" },
-      { code: "POP ENG 011", name: "Manutenção Preventiva em Câmeras de Vídeo" },
-      { code: "POP ENG 012", name: "Manutenção Preventiva em Raio-X" },
-      { code: "POP ENG 013", name: "Manutenção Preventiva em Microscópios Cirúrgicos" },
-      { code: "POP ENG 014", name: "Manutenção Preventiva em Fontes de Luz" },
-      { code: "POP ENG 015", name: "Manutenção Preventiva em Insufladores" },
-      { code: "POP ENG 016", name: "Manutenção Preventiva em Circulação Extra Corpórea" },
-      { code: "POP ENG 017", name: "Manutenção Preventiva em Ventiladores/Respiradores" },
-      { code: "POP ENG 018", name: "Manutenção Preventiva em Arcos Cirúrgicos" },
-      { code: "POP ENG 019", name: "Manutenção Preventiva em Aparelho de Ultrassom" },
-      { code: "POP ENG 020", name: "Manutenção Preventiva em Eletrocardiógrafos" },
-      { code: "POP ENG 021", name: "Manutenção Preventiva em Aspiradores de Secreção" },
-      { code: "POP ENG 022", name: "Manutenção Preventiva em Processador de Filmes" },
-      { code: "POP ENG 023", name: "Manutenção Preventiva em Esteiras Ergométricas", text: "A manutenção preventiva foi REALIZADA CONFORME pela Eng clínica, seguindo as diretrizes do POP ENG 023, no qual foram executados testes funcionais e este apresentou desempenho esperado pelos padrões estabelecidos , atestando sua aptidão para uso." },
-      { code: "POP ENG 024", name: "Manutenção Preventiva em Holter" },
-      { code: "POP ENG 025", name: "Manutenção Preventiva em Lavadora Ultrassônica" },
-      { code: "POP ENG 026", name: "Coleta de Água para análise - CME" },
-      { code: "POP ENG 027", name: "Manutenção Preventiva em Balão Intra órtico" },
-      { code: "POP ENG 028", name: "Realização da Manutenção Preventiva em Máquinas de Hemodiálise" },
-      { code: "POP ENG 029", name: "Manutenção Preventiva nas Reprocessadoras de Capilares" },
-      { code: "POP ENG 030", name: "Manutenção Preventiva do sistema de controle e produção de concentrado" },
-      { code: "POP ENG 031", name: "Desinfecção do tanque de água tratada e do loop de distribuição com ozônio" },
-      { code: "POP ENG 032", name: "Realização da Desinfecção do Tanque de Água Tratada e Sistema do Loop de Distribuição" },
-      { code: "POP ENG 033", name: "Manutenção Preventiva do Sistema de Tratamento do serviço de dialise" },
-      { code: "POP ENG 034", name: "Calibração de aparelho de pressão" },
-      { code: "POP ENG 035", name: "Coleta de água para análise - Diálise" },
-      { code: "POP ENG 036", name: "Manual de conduta para o tratamento de água" },
-      { code: "POP ENG 037", name: "Sistema Operacional do Tratamento de Água da Hemodiálise" },
-      { code: "POP ENG 038", name: "Teste Diário do Sistema de Tratamento de Água da Diálise" },
-      { code: "POP ENG 039", name: "Manutenção Preventiva em Osmose Reversa 1ºpasso" },
-      { code: "POP ENG 040", name: "Manutenção Preventiva em Osmose Reversa 2ºpasso" },
-      { code: "POP ENG 041", name: "Rotinas para Tecnovigilância" },
-      { code: "POP ENG 042", name: "Manutenção Preventiva em Armário de Vídeo" },
-      { code: "POP ENG 043", name: "Manutenção Preventiva em Aquecedor" },
-      { code: "POP ENG 044", name: "Manutenção Preventiva em Balança" },
-      { code: "POP ENG 045", name: "Manutenção Preventiva em Bilispot" },
-      { code: "POP ENG 046", name: "Manutenção Preventiva em Incubadora" },
-      { code: "POP ENG 047", name: "Manutenção Preventiva em MAPA", text: "Manutenção Preventiva em MAPA realizada com sucesso conforme o POP ENG 047, equipamento liberado para uso" },
-      { code: "POP ENG 048", name: "Manutenção Preventiva em Torniquete" },
-      { code: "POP ENG 049", name: "Manutenção Preventiva em Craniótomo" },
-      { code: "POP ENG 050", name: "Manutenção Preventiva em Urodinâmica" },
-      { code: "POP ENG 051", name: "Manutenção Preventiva em Hemocron" },
-      { code: "POP ENG 053", name: "Processo Administrativo - Montagem de orçamentos" },
-      { code: "POP ENG 054", name: "Manutenção Preventiva em Colposcópio/Videocolposcópio" },
-      { code: "POP ENG 055", name: "Manutenção Preventiva em Polígrafo" },
-      { code: "POP ENG 056", name: "Manutenção Preventiva em Micrótomo" },
-      { code: "POP ENG 057", name: "Manutenção Preventiva em Serra de Gesso" },
-      { code: "POP ENG 058", name: "Manutenção Preventiva em Radiômetro" },
-      { code: "POP ENG 059", name: "Avaliação e verificação de certificado de calibração e TSE" },
-      { code: "POP ENG 060", name: "Manutenção Preventiva em Otocalorímetro" },
-      { code: "POP ENG 061", name: "Recebimento e conferência de notas fiscais" },
-      { code: "POP ENG 062", name: "Processo Administrativo - Alimentação de planilhas" },
-      { code: "POP ENG 063", name: "Processo Administrativo - Arquivamento de documentos" },
-      { code: "POP ENG 064", name: "Descontinuidade e descarte em equipamento eletromédico e instrumentos de medição" },
-      { code: "POP ENG 065", name: "Validação dos serviços de calibração" },
-      { code: "POP ENG 066", name: "Realização da Desinfecção do Tanque de Água Tratada e Sistema do Loop de Distribuição do CME" },
-      { code: "POP ENG 067", name: "Teste Diário do Sistema de Tratamento de Água da CME" },
-      { code: "POP ENG 068", name: "Teste de Segurança Elétrica" },
-      { code: "POP ENG 069", name: "Manutenção Preventiva em Bomba de Sangue" },
-      { code: "POP ENG 070", name: "Manutenção em CAMA", text: "A manutenção preventiva foi REALIZADA CONFORME pela Eng clínica, seguindo as diretrizes do POP 070, no qual foram executados testes funcionais e este apresentou desempenho esperado pelos padrões estabelecidos , atestando sua aptidão para uso." },
-      { code: "POP ENG 071", name: "Manutenção Preventiva em Estufa para Cultura" },
-      { code: "POP ENG 072", name: "Manutenção Preventiva em Audiômetro Siemens" },
-      { code: "POP ENG 073", name: "Manutenção Preventiva em Detector Fetal" },
-      { code: "POP ENG 074", name: "Manutenção Preventiva em Impedanciômetro" },
-      { code: "POP ENG 075", name: "Manutenção Preventiva em Monitor de Óxido Nítrico" },
-      { code: "POP ENG 076", name: "Manutenção Preventiva em Rotem Delta" },
-      { code: "POP ENG 077", name: "Manutenção Preventiva em Spot Signs XLi" },
-      { code: "POP ENG 078", name: "Manutenção Preventiva em Video Printer" },
-      { code: "POP ENG 079", name: "Manutenção Preventiva em Elevador" },
-      { code: "POP ENG 080", name: "Manutenção Preventiva em Eletroencefalógrafo" },
-      { code: "POP ENG 081", name: "Manutenção Preventiva em Walbox" },
-      { code: "POP ENG 082", name: "Manutenção Preventiva em Osmose Reversa Portátil" },
-      { code: "POP ENG 083", name: "Abertura de chamados técnicos para empresas terceirizadas" },
-      { code: "POP ENG 084", name: "Manutenção Corretiva" },
-      { code: "POP ENG 085", name: "Verificação - Atualização da Planilha de Padrão de Fornecedores" },
-      { code: "POP ENG 086", name: "Teste de Linearidade dos Glicosímetros Freestyle Precision Pro Abbott" },
-      { code: "POP ENG 087", name: "Geração e Impressão de OS Programadas" },
-      { code: "POP ENG 088", name: "Manutenção Preventiva em Autoclave Vertical AV75" }
-    ];
-
-    // MODELOS DE TEXTO DAS ORDENS DE SERVIÇO
-    const TEXT_TEMPLATES = {
-      // CALIBRAÇÃO - AC
-      'calib-ac-ec-conf': {
-        title: 'Calibração - AC - Engenharia Clínica (Conforme)',
-        rawText: 'Durante os ensaios de calibração conduzidos de acordo com as diretrizes estabelecidas pelo PRS ENG 04 e a tabela de critérios de aceitação, foi constatado que o equipamento apresentou valores dentro do limite aceitável. É seguro concluir, portanto, que ele está apto para uso.'
-      },
-      'calib-ac-ec-nconf': {
-        title: 'Calibração - AC - Engenharia Clínica (Não Conforme)',
-        rawText: 'Durante os ensaios de calibração conduzidos de acordo com as diretrizes estabelecidas pelo PRS ENG 04 e a tabela de critérios de aceitação, foi constatado que o equipamento não apresentou valores aceitáveis. Portanto, este se encontra inapto para uso.'
-      },
-      'calib-ac-terc-conf': {
-        title: 'Calibração - AC - Terceiros (Conforme)',
-        rawText: 'Durante os ensaios de calibração realizados pela empresa (EMPRESA), seguindo as diretrizes estabelecidas pelo PRS ENG 04 e a tabela de critérios de aceitação, foi constatado que o equipamento apresentou valores dentro do limite aceitável. É seguro concluir, portanto, que ele está apto para uso.',
-        vars: [{ key: 'EMPRESA', label: 'Nome da Empresa Terceirizada', default: '---------' }]
-      },
-      'calib-ac-terc-nconf': {
-        title: 'Calibração - AC - Terceiros (Não Conforme)',
-        rawText: 'Durante os ensaios de calibração realizados pela empresa (EMPRESA), seguindo as diretrizes estabelecidas pelo PRS ENG 04 e a tabela de critérios de aceitação, foi constatado que o equipamento não apresentou valores aceitáveis. Portanto, este se encontra inapto para uso.',
-        vars: [{ key: 'EMPRESA', label: 'Nome da Empresa Terceirizada', default: '---------' }]
-      },
-
-      // CALIBRAÇÃO - DS
-      'calib-ds-ec-conf': {
-        title: 'Calibração - DS - Engenharia Clínica (Conforme)',
-        rawText: 'A Calibração foi REALIZADA CONFORME pela Eng Clínica, de acordo com o PRS ENG 04 e tabela de critérios de aceitação. Testes funcionais ok. Equipamento apto para uso. Segundo certificado em anexo CAL/ENG(CERTIFICADO)-26.',
-        vars: [{ key: 'CERTIFICADO', label: 'Número do Certificado (ex: XXXX)', default: 'XXXX' }]
-      },
-      'calib-ds-ec-nconf': {
-        title: 'Calibração - DS - Engenharia Clínica (Não Conforme)',
-        rawText: 'A calibração foi REALIZADA NÃO CONFORME, pois durante a manutenção programada executada pela Eng Clínica, seguindo o PRS ENG 04 o equipamento apresentou valores fora dos limites estabelecidos pela tabela de critérios de aceitação. Dessa forma, estando inapto para uso.'
-      },
-      'calib-ds-terc-conf': {
-        title: 'Calibração - DS - Terceiros (Conforme)',
-        rawText: 'A Calibração foi REALIZADA CONFORME pela empresa (EMPRESA), de acordo com o PRS ENG 04 e tabela de critérios de aceitação. Testes funcionais ok. Equipamento apto para uso. Segundo certificado em anexo.',
-        vars: [{ key: 'EMPRESA', label: 'Nome da Empresa Terceirizada', default: 'XXXXXXXX' }]
-      },
-      'calib-ds-terc-nconf': {
-        title: 'Calibração - DS - Terceiros (Não Conforme)',
-        rawText: 'A calibração foi REALIZADA NÃO CONFORME, pois durante a manutenção programada executada pela empresa (EMPRESA), seguindo o PRS ENG 04 o equipamento apresentou valores fora dos limites estabelecidos pela tabela de critérios de aceitação. Dessa forma, estando inapto para uso.',
-        vars: [{ key: 'EMPRESA', label: 'Nome da Empresa Terceirizada', default: 'XXXXXXX' }]
-      },
-
-      // TSE
-      'tse-ac-conf': {
-        title: 'TSE - Análise Crítica (Conforme)',
-        rawText: 'Durante o Teste de segurança Elétrica realizado conforme as normas ABNT (IEC 60601-1 / IEC 62353) e POP ENG 068 o equipamento apresentou valores aceitáveis e encontra-se apto para uso.'
-      },
-      'tse-ac-nconf': {
-        title: 'TSE - Análise Crítica (Não Conforme)',
-        rawText: 'Durante o Teste de segurança Elétrica realizado conforme as normas ABNT (IEC 60601-1 / IEC 62353) e POP ENG 068 o equipamento apresentou valores fora do limites aceitáveis e encontra-se inapto para uso.'
-      },
-      'tse-ds-conf': {
-        title: 'TSE - Descrição de Serviço (Conforme)',
-        rawText: 'O Teste de Segurança elétrica foi REALIZADO CONFORME pela Eng Clínica, seguindo as diretrizesdo POP ENG 068. Testes funcionais ok. Equipamento apto para uso. De acordo com certificado em anexo.'
-      },
-      'tse-ds-nconf': {
-        title: 'TSE - Descrição de Serviço (Não Conforme)',
-        rawText: 'O Teste de segurança elétrica foi REALIZADO NÃO CONFORME pela Eng Clínica, pois mesmo seguindo as diretrizesdo POP ENG 068, o equipamento apresentou valores fora do limite aceitável, estando portantoinapto para uso. De acordo com certificado TSE/ENG(CERTIFICADO)-24 em anexo.',
-        vars: [{ key: 'CERTIFICADO', label: 'Número do Certificado TSE', default: 'XXXX' }]
-      },
-
-      // PREVENTIVAS
-      'prev-ds-conf': {
-        title: 'Manutenção Preventiva (Conforme)',
-        rawText: 'A manutenção preventiva foi REALIZADA CONFORME pela Eng clínica, seguindo as diretrizes do (POP), no qual foram executados testes funcionais e este apresentou desempenho esperado pelos padrões estabelecidos , atestando sua aptidão para uso.',
-        vars: [{ key: 'POP', label: 'POP Aplicável (ex: POP ENG 004)', default: 'POP ENG XXX' }]
-      },
-      'prev-ds-nconf': {
-        title: 'Manutenção Preventiva (Não Conforme)',
-        rawText: 'A manutenção preventiva foi REALIZADANÃO CONFORME, pois durante a execução pela Eng clínica, seguindo as diretrizes do (POP), o equipamento apresentou a seguinte avaria ((AVARIA)) no qual foi atested sua inaptidão para uso.',
-        vars: [
-          { key: 'POP', label: 'POP Aplicável', default: 'POP ENG XXX' },
-          { key: 'AVARIA', label: 'Descrição Detalhada da Avaria', default: 'Descrever defeito constatado' }
-        ]
-      },
-
-      // APARELHO DE PRESSÃO
-      'press-ac-conf': {
-        title: 'Aparelho de Pressão - AC (Conforme)',
-        rawText: 'Durante os ensaios de calibração conduzidos de acordo com as diretrizes estabelecidas pelo POP ENG 034 e a tabela de critérios de aceitação, foi constatado que o equipamento apresentou valores dentro do limite aceitável. É seguro concluir, portanto, que ele está apto para uso.'
-      },
-      'press-ac-nconf': {
-        title: 'Aparelho de Pressão - AC (Não Conforme)',
-        rawText: 'Durante os ensaios de calibração conduzidos de acordo com as diretrizes estabelecidas pelo POP ENG 034 e a tabela de critérios de aceitação, foi constatado que o equipamento não apresentou valores aceitáveis. Portanto, este se encontra inapto para uso.'
-      },
-      'press-ds-conf': {
-        title: 'Aparelho de Pressão - DS (Conforme)',
-        rawText: 'A Calibração foi REALIZADA CONFORME pela Eng Clínica, de acordo com o POP ENG 034 e tabela de critérios de aceitação. Testes funcionais ok. Equipamento apto para uso. Segundo certificado em anexo CAL/ENG(CERTIFICADO)-24.',
-        vars: [{ key: 'CERTIFICADO', label: 'Número do Certificado (CAL/ENGXXXX-24)', default: 'XXXX' }]
-      },
-      'press-ds-nconf': {
-        title: 'Aparelho de Pressão - DS (Não Conforme)',
-        rawText: 'A calibração foi REALIZADA NÃO CONFORME, pois durante a manutenção programada executada pela Eng Clínica, seguindo o POP ENG 034 o equipamento apresentou valores fora dos limites estabelecidos pela tabela de critérios de aceitação. Dessa forma, estando inapto para uso.'
-      },
-
-      // OCORRÊNCIAS
-      'ocorr-nao-realizado': {
-        title: 'Não Realizado (Com Motivo)',
-        rawText: 'NÃO REALIZADO, pois o equipamento apresentou ((MOTIVO)), mediante ao fato supracitado a manutenção programada não pôde ser executada.',
-        vars: [{ key: 'MOTIVO', label: 'Motivo Técnico / Operacional', default: 'Descrever o motivo do impedimento' }]
-      },
-      'ocorr-nao-localizado': {
-        title: 'Não Localizado',
-        rawText: 'NÃO LOCALIZADO, pelo setor de origem, para realização da sua manutenção programada dentro do mês vigente.'
-      },
-      'ocorr-nao-disponibilizado': {
-        title: 'Não Disponibilizado',
-        rawText: 'NÃO DISPONIBILIZADO, pelo setor de origem, para realização da sua manutenção programada dentro do mês vigente.'
-      }
-    };
-
-    // VARIÁVEIS DOM
-    let currentTemplateKey = null;
-    const globalSearch = document.getElementById('globalSearch');
-    const clearSearch = document.getElementById('clearSearch');
-    const popTableBody = document.getElementById('popTableBody');
-    const popFilterInput = document.getElementById('popFilterInput');
-    const textModal = document.getElementById('textModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalTextarea = document.getElementById('modalTextarea');
-    const dynamicInputsContainer = document.getElementById('dynamicInputsContainer');
-    const dynamicInputsList = document.getElementById('dynamicInputsList');
-    const toast = document.getElementById('toast');
-    const toastMessage = document.getElementById('toastMessage');
-
-    // INICIALIZAÇÃO DA APLICAÇÃO
-    window.addEventListener('DOMContentLoaded', () => {
-      lucide.createIcons();
-      renderPOPsTable(POPS_DATA);
-      setupTabNavigation();
-      setupEventListeners();
-    });
-
-    // RENDERIZAR TABELA DE POPS
-    function renderPOPsTable(data) {
-      popTableBody.innerHTML = '';
-      if (data.length === 0) {
-        popTableBody.innerHTML = `
-          <tr>
-            <td colspan="3" class="py-8 text-center text-slate-500 font-medium">Nenhum POP encontrado para os critérios informados.</td>
-          </tr>
-        `;
-        return;
-      }
-
-      data.forEach(pop => {
-        const tr = document.createElement('tr');
-        tr.className = 'hover:bg-slate-800/50 transition-colors border-b border-slate-800/40';
-        
-        const defaultText = pop.text ? pop.text : `A manutenção preventiva foi REALIZADA CONFORME pela Eng clínica, seguindo as diretrizes do ${pop.code}, no me qual foram executados testes funcionais e este apresentou desempenho esperado pelos padrões estabelecidos , atestando sua aptidão para uso.`;
-
-        tr.innerHTML = `
-          <td class="py-3 px-4 font-mono font-semibold text-cyan-400 bg-slate-950/40">${pop.code}</td>
-          <td class="py-3 px-4">
-            <span class="font-medium text-slate-200">${pop.name}</span>
-            ${pop.text ? `<span class="ml-2 inline-block px-2 py-0.5 text-[9px] bg-emerald-950 text-emerald-400 border border-emerald-800/50 rounded font-bold">Texto Específico</span>` : ''}
-          </td>
-          <td class="py-3 px-4 text-center">
-            <div class="flex items-center justify-center gap-2">
-              <button 
-                onclick="copyDirect('${pop.code}')" 
-                title="Copiar Código do POP"
-                class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-semibold rounded-lg border border-slate-700 transition-colors flex items-center gap-1">
-                <i data-lucide="tag" class="w-3 h-3 text-cyan-400"></i> Código
-              </button>
-              <button 
-                onclick="copyDirect('${escapeJsString(defaultText)}')" 
-                title="Copiar Texto de Fechamento"
-                class="px-2.5 py-1 bg-cyan-950/80 hover:bg-cyan-900/90 text-cyan-300 text-[11px] font-semibold rounded-lg border border-cyan-800/60 transition-colors flex items-center gap-1">
-                <i data-lucide="copy" class="w-3 h-3"></i> Texto OS
-              </button>
-            </div>
-          </td>
-        `;
-        popTableBody.appendChild(tr);
-      });
-      lucide.createIcons();
-    }
-
-    function escapeJsString(str) {
-      return str.replace(/'/g, "\\'").replace(/"/g, '\\"');
-    }
-
-    // NAVEGAÇÃO DE ABAS
-    function setupTabNavigation() {
-      const tabBtns = document.querySelectorAll('.tab-btn');
-      const sections = document.querySelectorAll('.category-section');
-
-      tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const target = btn.getAttribute('data-target');
-
-          tabBtns.forEach(b => {
-            b.classList.remove('text-cyan-400', 'bg-cyan-950/60', 'border-cyan-500/40', 'font-bold');
-            b.classList.add('text-slate-400', 'hover:bg-slate-900', 'border-transparent', 'font-semibold');
-          });
-
-          btn.classList.add('text-cyan-400', 'bg-cyan-950/60', 'border-cyan-500/40', 'font-bold');
-          btn.classList.remove('text-slate-400', 'hover:bg-slate-900', 'border-transparent');
-
-          if (target === 'section-all') {
-            sections.forEach(sec => sec.classList.remove('hidden'));
-          } else {
-            sections.forEach(sec => {
-              if (sec.id === target) {
-                sec.classList.remove('hidden');
-              } else {
-                sec.classList.add('hidden');
-              }
-            });
-          }
-        });
-      });
-    }
-
-    // SEARCH & FILTROS
-    function setupEventListeners() {
-      popFilterInput.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase().trim();
-        const filtered = POPS_DATA.filter(p => 
-          p.code.toLowerCase().includes(query) || 
-          p.name.toLowerCase().includes(query)
-        );
-        renderPOPsTable(filtered);
-      });
-
-      globalSearch.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase().trim();
-        if (query.length > 0) {
-          clearSearch.classList.remove('hidden');
-        } else {
-          clearSearch.classList.add('hidden');
-        }
-
-        const cards = document.querySelectorAll('.card-item');
-        cards.forEach(card => {
-          const text = card.textContent.toLowerCase();
-          if (text.includes(query)) {
-            card.classList.remove('hidden');
-          } else {
-            card.classList.add('hidden');
-          }
-        });
-
-        const filteredPops = POPS_DATA.filter(p => 
-          p.code.toLowerCase().includes(query) || 
-          p.name.toLowerCase().includes(query)
-        );
-        renderPOPsTable(filteredPops);
-      });
-
-      clearSearch.addEventListener('click', () => {
-        globalSearch.value = '';
-        clearSearch.classList.add('hidden');
-        document.querySelectorAll('.card-item').forEach(c => c.classList.remove('hidden'));
-        renderPOPsTable(POPS_DATA);
-      });
-    }
-
-    // MODAL DINÂMICO
-    function openModal(key) {
-      const template = TEXT_TEMPLATES[key];
-      if (!template) return;
-
-      currentTemplateKey = key;
-      modalTitle.textContent = template.title;
-      
-      // Limpar Inputs Dinâmicos Anteriores
-      dynamicInputsList.innerHTML = '';
-
-      if (template.vars && template.vars.length > 0) {
-        dynamicInputsContainer.classList.remove('hidden');
-        
-        template.vars.forEach(v => {
-          const fieldWrapper = document.createElement('div');
-          fieldWrapper.className = 'flex flex-col gap-1';
-          fieldWrapper.innerHTML = `
-            <label class="text-[11px] font-medium text-slate-300">${v.label}:</label>
-            <input 
-              type="text" 
-              data-var-key="${v.key}" 
-              value="${v.default}" 
-              class="dyn-input w-full bg-slate-900 border border-slate-700 focus:border-cyan-500 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none"
-            />
-          `;
-          dynamicInputsList.appendChild(fieldWrapper);
-        });
-
-        // Registrar listener para atualização em tempo real
-        const inputs = dynamicInputsList.querySelectorAll('.dyn-input');
-        inputs.forEach(input => {
-          input.addEventListener('input', updateModalText);
-        });
-
-        updateModalText();
-      } else {
-        dynamicInputsContainer.classList.add('hidden');
-        modalTextarea.value = template.rawText;
-      }
-
-      textModal.classList.remove('hidden');
-      setTimeout(() => {
-        textModal.firstElementChild.classList.remove('scale-95');
-        textModal.firstElementChild.classList.add('scale-100');
-      }, 10);
-    }
-
-    function updateModalText() {
-      const template = TEXT_TEMPLATES[currentTemplateKey];
-      if (!template) return;
-
-      let formattedText = template.rawText;
-      const inputs = dynamicInputsList.querySelectorAll('.dyn-input');
-
-      inputs.forEach(input => {
-        const key = input.getAttribute('data-var-key');
-        const val = input.value.trim() || '---';
-
-        // Substituir padrões como (EMPRESA), (CERTIFICADO), (POP), ((MOTIVO)), etc.
-        const regex1 = new RegExp(`\\(${key}\\)`, 'g');
-        const regex2 = new RegExp(`\\(\\(${key}\\)\\)`, 'g');
-        formattedText = formattedText.replace(regex2, val).replace(regex1, val);
-      });
-
-      modalTextarea.value = formattedText;
-    }
-
-    function closeModal() {
-      textModal.firstElementChild.classList.remove('scale-100');
-      textModal.firstElementChild.classList.add('scale-95');
-      setTimeout(() => {
-        textModal.classList.add('hidden');
-      }, 150);
-    }
-
-    function copyFromModal() {
-      const text = modalTextarea.value;
-      copyToClipboard(text, 'Texto formatado copiado com sucesso!');
-      closeModal();
-    }
-
-    function copyDirect(text) {
-      copyToClipboard(text, 'Copiado para a área de transferência!');
-    }
-
-    // CLIPBOARD API COM FALLBACK
-    function copyToClipboard(text, successMsg) {
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(() => {
-          showToast(successMsg);
-        }).catch(() => {
-          fallbackCopy(text, successMsg);
-        });
-      } else {
-        fallbackCopy(text, successMsg);
-      }
-    }
-
-    function fallbackCopy(text, successMsg) {
-      const textarea = document.createElement('textarea');
-      textarea.value = text;
-      textarea.style.position = 'fixed';
-      textarea.style.opacity = '0';
-      document.body.appendChild(textarea);
-      textarea.focus();
-      textarea.select();
-      try {
-        document.execCommand('copy');
-        showToast(successMsg);
-      } catch (err) {
-        showToast('Erro ao copiar automaticamente. Copie manualmente.');
-      }
-      document.body.removeChild(textarea);
-    }
-
-    // TOAST FEEDBACK
-    function showToast(message) {
-      toastMessage.textContent = message;
-      toast.classList.remove('translate-y-16', 'opacity-0');
-      toast.classList.add('translate-y-0', 'opacity-100');
-
-      setTimeout(() => {
-        toast.classList.remove('translate-y-0', 'opacity-100');
-        toast.classList.add('translate-y-16', 'opacity-0');
-      }, 2500);
-    }
-  </script>
+<body>
+<header><div class="hd">
+  <div><h1>Fechamento de OS</h1><p>Engenharia Clínica: modelos prontos para copiar</p></div>
+  <div class="ha"><input id="sq" type="search" placeholder="Pesquisar modelos, POPs, equipamentos…" aria-label="Pesquisar"><button class="s" id="hb">Histórico</button></div>
+</div></header>
+<main><nav id="tabs" role="tablist"></nav><div id="app"></div></main>
+<dialog id="dlg">
+  <div class="mh"><div><h2 id="mt"></h2><p id="ms"></p></div><button class="x" id="x" aria-label="Fechar">×</button></div>
+  <div class="mb"><div id="mf"></div><label class="lb" for="out">Texto da OS (pode editar antes de copiar)</label><textarea id="out" rows="6"></textarea></div>
+  <div class="mfo"><button class="s" id="cn">Cancelar</button><button class="p" id="cp">Copiar texto</button></div>
+</dialog>
+<dialog id="hd">
+  <div class="mh"><div><h2>Histórico</h2><p>Últimos textos copiados neste navegador</p></div><button class="x" id="hx" aria-label="Fechar">×</button></div>
+  <div class="mb" id="hl"></div>
+  <div class="mfo"><button class="s" id="hc">Limpar histórico</button><button class="p" id="hk">Fechar</button></div>
+</dialog>
+<datalist id="pl"></datalist>
+<div id="toast" role="status"></div>
+<script>
+const $=s=>document.querySelector(s);
+const YY=String(new Date().getFullYear()).slice(2);
+const L={e:'Empresa',p:'POP',c:'Nº do certificado',a:'Avaria',m:'Motivo'};
+const PH={e:'Nome da empresa',p:'Selecione ou digite',c:'Só o número, ex.: 0123',a:'Descreva a avaria',m:'Ex.: avaria, em uso pelo paciente'};
+const DEF=['Surgical','Vilela','Geeta','Precisa','Drager','Mhedica'];
+let cos=[];try{cos=JSON.parse(localStorage.getItem('cos')||'[]')}catch(e){}
+const saveCos=()=>{try{localStorage.setItem('cos',JSON.stringify(cos))}catch(e){}};
+
+/* Tipos de card: mesma cor em todas as abas */
+const K={ec:['Engenharia Clínica',175],terc:['Terceiros',225],prev:['Preventiva',280],mapa:['MAPA',315],nr:['Não realizado',28],nl:['Não localizado',50],nd:['Não disponibilizado',95]};
+
+/* Textos. Marcadores: {e} empresa, {p} POP, {c} certificado, {a} avaria, {m} motivo */
+const ac=(pr,ok,emp)=>`Durante os ensaios de calibração ${emp?'realizados pela empresa {e}, seguindo':'conduzidos de acordo com'} as diretrizes estabelecidas pelo ${pr} e a tabela de critérios de aceitação, foi constatado que o equipamento ${ok?'apresentou valores dentro do limite aceitável. É seguro concluir, portanto, que ele está apto para uso.':'não apresentou valores dentro do limite aceitável. Portanto, este se encontra inapto para uso.'}`;
+const ds=(pr,ok,emp)=>{const w=emp?'empresa {e}':'Eng Clínica';return ok?`A Calibração foi REALIZADA CONFORME pela ${w}, de acordo com o ${pr} e tabela de critérios de aceitação. Testes funcionais ok. Equipamento apto para uso. Segundo certificado em anexo${emp?'':` CAL/ENG{c}-${YY}`}.`:`A calibração foi REALIZADA NÃO CONFORME, pois durante a manutenção programada executada pela ${w}, seguindo o ${pr} o equipamento apresentou valores fora dos limites estabelecidos pela tabela de critérios de aceitação. Dessa forma, estando inapto para uso.`};
+const par=(f,emp,pr)=>{const e=emp?['e']:[];return[['Conforme','ok',f(pr,1,emp),emp?e:f==ds?['c']:[]],['Não conforme','nc',f(pr,0,emp),e]]};
+const one=(t,f=[])=>[['Abrir modelo','na',t,f]];
+const PR='PRS ENG 04',P34='POP ENG 034';
+const tac=(ok,emp)=>`Durante o Teste de Segurança Elétrica realizado ${emp?'pela empresa {e}, conforme':'conforme'} as normas ABNT (IEC 60601-1 / IEC 62353) e POP ENG 068 o equipamento apresentou valores ${ok?'aceitáveis e encontra-se apto para uso.':'fora dos limites aceitáveis e encontra-se inapto para uso.'}`;
+const tsd=(ok,emp)=>`O Teste de Segurança elétrica foi REALIZADO ${ok?'CONFORME':'NÃO CONFORME'} pela ${emp?'empresa {e}':'Eng Clínica'}, ${ok?'seguindo as diretrizes do POP ENG 068. Testes funcionais ok. Equipamento apto para uso.':'pois mesmo seguindo as diretrizes do POP ENG 068, o equipamento apresentou valores fora do limite aceitável, estando portanto inapto para uso.'} De acordo com certificado${emp?'':` TSE/ENG{c}-${YY}`} em anexo.`;
+const tp=(f,emp)=>{const x=emp?['e']:f==tsd?['c']:[];return[['Conforme','ok',f(1,emp),x],['Não conforme','nc',f(0,emp),x]]};
+const PREV=['A manutenção preventiva foi REALIZADA CONFORME pela Eng clínica, seguindo as diretrizes do {p}, no qual foram executados testes funcionais e este apresentou desempenho esperado pelos padrões estabelecidos, atestando sua aptidão para uso.','A manutenção preventiva foi REALIZADA NÃO CONFORME, pois durante a execução pela Eng clínica, seguindo as diretrizes do {p}, o equipamento apresentou a seguinte avaria: {a}, no qual foi atestado sua inaptidão para uso.'];
+const MAPA='Manutenção preventiva em MAPA realizada com sucesso conforme o POP ENG 047, equipamento liberado para uso.';
+
+const S=[
+{id:'calib',n:'Calibração',d:'Ensaios conduzidos segundo as diretrizes do PRS ENG 04',ch:'PRS ENG 04',c:[
+ {k:'ec',t:'Análise crítica',d:'Conduzida pela equipe interna, conforme tabela de critérios de aceitação.',b:par(ac,0,PR)},
+ {k:'terc',t:'Análise crítica',d:'Realizada por empresa contratada. Informe a empresa.',b:par(ac,1,PR)},
+ {k:'ec',t:'Descrição de serviço',d:'Calibração interna com certificado CAL/ENG em anexo.',b:par(ds,0,PR)},
+ {k:'terc',t:'Descrição de serviço',d:'Calibração executada por terceiros, certificado em anexo.',b:par(ds,1,PR)}]},
+{id:'tse',n:'TSE',d:'Normas ABNT (IEC 60601-1 / IEC 62353) e POP ENG 068',ch:'POP ENG 068',c:[
+ {k:'ec',t:'Análise crítica',d:'Teste de segurança elétrica: valores dentro ou fora dos limites.',b:tp(tac,0)},
+ {k:'terc',t:'Análise crítica',d:'Teste realizado por empresa contratada. Informe a empresa.',b:tp(tac,1)},
+ {k:'ec',t:'Descrição de serviço',d:'Laudo descritivo com número do certificado TSE/ENG.',b:tp(tsd,0)},
+ {k:'terc',t:'Descrição de serviço',d:'Teste executado por terceiros, certificado em anexo.',b:tp(tsd,1)}]},
+{id:'prev',n:'Preventiva',d:'Manutenções periódicas programadas por POP específico',ch:'POP geral',c:[
+ {k:'prev',t:'Manutenção preventiva padrão',d:'Escolha o POP. Na não conformidade, descreva a avaria.',b:[['Conforme','ok',PREV[0],['p']],['Não conforme','nc',PREV[1],['p','a']]]},
+ {k:'mapa',t:'MAPA',d:'Modelo específico do POP ENG 047.',b:one(MAPA)}]},
+{id:'pressao',n:'Aparelho de pressão',d:'Calibração segundo o POP ENG 034',ch:'POP ENG 034',c:[
+ {k:'ec',t:'Análise crítica',d:'Valores dentro ou fora do limite aceitável.',b:par(ac,0,P34)},
+ {k:'ec',t:'Descrição de serviço',d:'Calibração interna com certificado CAL/ENG em anexo.',b:par(ds,0,P34)}]},
+{id:'oc',n:'Ocorrências',d:'Justificativas para manutenção programada não realizada no mês',ch:'Impedimentos',c:[
+ {k:'nr',t:'Não realizado',d:'Impedimento técnico ou operacional. Informe o motivo.',b:one('NÃO REALIZADO, pois o equipamento apresentou {m}, mediante ao fato descrito a manutenção programada não pôde ser executada.',['m'])},
+ {k:'nl',t:'Não localizado',d:'Equipamento não localizado no setor no mês vigente.',b:one('NÃO LOCALIZADO, pelo setor de origem, para realização da sua manutenção programada dentro do mês vigente.')},
+ {k:'nd',t:'Não disponibilizado',d:'Setor não liberou o aparelho para a manutenção.',b:one('NÃO DISPONIBILIZADO, pelo setor de origem, para realização da sua manutenção programada dentro do mês vigente.')}]}
+];
+
+const POPS=`001 Tratamento de solicitações de serviço
+002 Atualizações e Revisões de Cronogramas de Manutenções Programadas
+003 Aquisição, Avaliação, Especificação, Recebimento, Instalação e Treinamento
+004 Manutenção Preventiva em Monitores Multiparâmetros
+005 Manutenção Preventiva em Cardioversores
+006 Manutenção Preventiva em Carrinhos de Anestesia
+007 Manutenção Preventiva em Oxímetros
+008 Manutenção Preventiva em Bisturis
+009 Manutenção Preventiva em Focos Cirúrgicos
+010 Manutenção Preventiva em Mesas Cirúrgicas
+011 Manutenção Preventiva em Câmeras de Vídeo
+012 Manutenção Preventiva em Raio-X
+013 Manutenção Preventiva em Microscópios Cirúrgicos
+014 Manutenção Preventiva em Fontes de Luz
+015 Manutenção Preventiva em Insufladores
+016 Manutenção Preventiva em Circulação Extra Corpórea
+017 Manutenção Preventiva em Ventiladores/Respiradores
+018 Manutenção Preventiva em Arcos Cirúrgicos
+019 Manutenção Preventiva em Aparelho de Ultrassom
+020 Manutenção Preventiva em Eletrocardiógrafos
+021 Manutenção Preventiva em Aspiradores de Secreção
+022 Manutenção Preventiva em Processador de Filmes
+023 Manutenção Preventiva em Esteiras Ergométricas
+024 Manutenção Preventiva em Holter
+025 Manutenção Preventiva em Lavadora Ultrassônica
+026 Coleta de Água para análise - CME
+027 Manutenção Preventiva em Balão Intra-aórtico
+028 Realização da Manutenção Preventiva em Máquinas de Hemodiálise
+029 Manutenção Preventiva nas Reprocessadoras de Capilares
+030 Manutenção Preventiva do sistema de controle e produção de concentrado
+031 Desinfecção do tanque de água tratada e do loop de distribuição com ozônio
+032 Realização da Desinfecção do Tanque de Água Tratada e Sistema do Loop de Distribuição
+033 Manutenção Preventiva do Sistema de Tratamento do serviço de diálise
+034 Calibração de aparelho de pressão
+035 Coleta de água para análise - Diálise
+036 Manual de conduta para o tratamento de água
+037 Sistema Operacional do Tratamento de Água da Hemodiálise
+038 Teste Diário do Sistema de Tratamento de Água da Diálise
+039 Manutenção Preventiva em Osmose Reversa 1º passo
+040 Manutenção Preventiva em Osmose Reversa 2º passo
+041 Rotinas para Tecnovigilância
+042 Manutenção Preventiva em Armário de Vídeo
+043 Manutenção Preventiva em Aquecedor
+044 Manutenção Preventiva em Balança
+045 Manutenção Preventiva em Bilispot
+046 Manutenção Preventiva em Incubadora
+047 Manutenção Preventiva em MAPA
+048 Manutenção Preventiva em Torniquete
+049 Manutenção Preventiva em Craniótomo
+050 Manutenção Preventiva em Urodinâmica
+051 Manutenção Preventiva em Hemocron
+053 Processo Administrativo - Montagem de orçamentos
+054 Manutenção Preventiva em Colposcópio/Videocolposcópio
+055 Manutenção Preventiva em Polígrafo
+056 Manutenção Preventiva em Micrótomo
+057 Manutenção Preventiva em Serra de Gesso
+058 Manutenção Preventiva em Radiômetro
+059 Avaliação e verificação de certificado de calibração e TSE
+060 Manutenção Preventiva em Otocalorímetro
+061 Recebimento e conferência de notas fiscais
+062 Processo Administrativo - Alimentação de planilhas
+063 Processo Administrativo - Arquivamento de documentos
+064 Descontinuidade e descarte em equipamento eletromédico e instrumentos de medição
+065 Validação dos serviços de calibração
+066 Realização da Desinfecção do Tanque de Água Tratada e Sistema do Loop de Distribuição do CME
+067 Teste Diário do Sistema de Tratamento de Água da CME
+068 Teste de Segurança Elétrica
+069 Manutenção Preventiva em Bomba de Sangue
+070 Manutenção em CAMA
+071 Manutenção Preventiva em Estufa para Cultura
+072 Manutenção Preventiva em Audiômetro Siemens
+073 Manutenção Preventiva em Detector Fetal
+074 Manutenção Preventiva em Impedanciômetro
+075 Manutenção Preventiva em Monitor de Óxido Nítrico
+076 Manutenção Preventiva em Rotem Delta
+077 Manutenção Preventiva em Spot Signs XLi
+078 Manutenção Preventiva em Video Printer
+079 Manutenção Preventiva em Elevador
+080 Manutenção Preventiva em Eletroencefalógrafo
+081 Manutenção Preventiva em Walbox
+082 Manutenção Preventiva em Osmose Reversa Portátil
+083 Abertura de chamados técnicos para empresas terceirizadas
+084 Manutenção Corretiva
+085 Verificação - Atualização da Planilha de Padrão de Fornecedores
+086 Teste de Linearidade dos Glicosímetros Freestyle Precision Pro Abbott
+087 Geração e Impressão de OS Programadas
+088 Manutenção Preventiva em Autoclave Vertical AV75`.split('\n').map(s=>({c:'POP ENG '+s.slice(0,3),n:s.slice(4),prev:/Manutenção Preventiva|Manutenção em CAMA/.test(s)}));
+const eqn=n=>n.replace(/^(Realização da )?Manutenção (Preventiva )?(em |nas |do |de )?/,'');
+$('#pl').innerHTML=POPS.filter(p=>p.prev).map(p=>`<option value="${p.c}">${eqn(p.n)}</option>`).join('');
+
+/* Estado e montagem da tela */
+let tab='all',cur=null;const V={};
+let hist=[];try{hist=JSON.parse(localStorage.getItem('hist')||'[]')}catch(e){}
+const saveH=()=>{try{localStorage.setItem('hist',JSON.stringify(hist))}catch(e){}};
+const addH=(t,k)=>{hist=[{t,k,d:Date.now()},...hist.filter(x=>x.t!==t)].slice(0,20);saveH()};
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+function build(){
+ $('#tabs').innerHTML=[['all','Todos'],...S.map(s=>[s.id,s.n]),['equip','Por equipamento'],['pops','Catálogo de POPs']].map(([i,n])=>`<button role="tab" data-i="${i}" aria-selected="${i==tab}">${n}</button>`).join('');
+ const app=$('#app');app.innerHTML='';
+ S.forEach(s=>{
+  const e=document.createElement('section');e.className='sec';e.dataset.id=s.id;
+  e.innerHTML=`<div class="sh"><div><h2>${s.n}</h2><p>${s.d}</p></div><span class="chip0">${s.ch}</span></div><div class="grid"></div>`;
+  s.c.forEach(c=>{
+   const d=document.createElement('div');d.className='card';d.style.setProperty('--h',K[c.k][1]);
+   d.dataset.s=norm([s.n,K[c.k][0],c.t,c.d,...c.b.map(b=>b[2])].join(' '));
+   d.innerHTML=`<span class="kd">${K[c.k][0]}</span><h3>${c.t}</h3><p>${c.d}</p><div class="btns"></div>`;
+   c.b.forEach(b=>{const x=document.createElement('button');x.className='b '+b[1];x.innerHTML=`<i></i>${b[0]}`;x.onclick=()=>openM(c,b);d.lastChild.append(x)});
+   e.lastChild.append(d);
+  });
+  app.append(e);
+ });
+
+ const eq=document.createElement('section');eq.className='sec';eq.dataset.id='equip';
+ eq.innerHTML='<div class="sh"><div><h2>Preventiva por equipamento</h2><p>Escolha o equipamento: o POP já vem preenchido.</p></div><span class="chip0">Preventiva</span></div><div class="grid eq"></div>';
+ POPS.filter(p=>p.prev).forEach(p=>{
+  const nm=eqn(p.n),mp=p.c.endsWith('047'),d=document.createElement('div');
+  d.className='card';d.style.setProperty('--h',K[mp?'mapa':'prev'][1]);d.dataset.s=norm('preventiva '+nm+' '+p.c);
+  d.innerHTML=`<span class="kd">${p.c}</span><h3>${nm}</h3><div class="btns"></div>`;
+  [mp?['Conforme','ok',MAPA,[]]:S[2].c[0].b[0],S[2].c[0].b[1]].forEach(b=>{
+   const x=document.createElement('button');x.className='b '+b[1];x.innerHTML=`<i></i>${b[0]}`;
+   x.onclick=()=>{V.p=p.c;openM({k:mp&&b[1]=='ok'?'mapa':'prev',t:nm},b)};d.lastChild.append(x)});
+  eq.lastChild.append(d);
+ });
+ app.append(eq);
+ app.insertAdjacentHTML('beforeend',`<section class="sec" data-id="pops"><div class="sh"><div><h2>Catálogo de POPs</h2><p>POP ENG 001 ao 088. Em POPs de preventiva, “Texto OS” abre o modelo já preenchido.</p></div><input id="pf" type="search" placeholder="Filtrar: 023, hemodiálise…" aria-label="Filtrar POPs"></div><div class="tw"><table><thead><tr><th>Código</th><th>Procedimento</th><th></th></tr></thead><tbody id="tb"></tbody></table></div></section>`);
+ $('#pf').oninput=apply;apply();
+}
+function apply(){
+ const q=norm($('#sq').value.trim()),pq=norm(($('#pf')||{value:''}).value.trim())||q;
+ let n=0;
+ document.querySelectorAll('.card').forEach(c=>c.hidden=!c.dataset.s.includes(q));
+ document.querySelectorAll('.sec').forEach(s=>{
+  const id=s.dataset.id,show=(tab=='all'&&id!='equip')||tab==id||(q&&id!='pops');
+  s.hidden=id=='pops'?!(tab=='all'||tab==id||q):!show||![...s.querySelectorAll('.card')].some(c=>!c.hidden);
+ });
+ const list=POPS.filter(p=>norm(p.c+' '+p.n).includes(pq));
+ $('#tb').innerHTML=list.length?'':'<tr><td colspan="3" class="empty">Nenhum POP encontrado.</td></tr>';
+ list.forEach(p=>{
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td>${p.c}</td><td>${p.n}</td><td></td>`;
+  const a=tr.lastChild,cb=document.createElement('button');cb.className='sm';cb.textContent='Código';cb.onclick=()=>copy(p.c,'Código copiado');a.append(cb);
+  if(p.prev){const tb=document.createElement('button');tb.className='sm';tb.textContent='Texto OS';tb.style.marginLeft='6px';
+   tb.onclick=()=>{if(p.c.endsWith('047'))openM({k:'mapa',t:'MAPA'},S[2].c[1].b[0]);else{V.p=p.c;openM({k:'prev',t:'Manutenção preventiva padrão'},S[2].c[0].b[0])}};a.append(tb)}
+  $('#tb').append(tr);
+ });
+}
+$('#tabs').onclick=e=>{const b=e.target.closest('button');if(b){tab=b.dataset.i;$('#tabs').querySelectorAll('button').forEach(x=>x.setAttribute('aria-selected',x==b));apply()}};
+$('#sq').oninput=apply;
+
+/* Modal */
+function chips(inp){
+ const w=document.createElement('div');w.className='chips';
+ const set=n=>{inp.value=n;V.e=n;gen()};
+ const draw=()=>{w.innerHTML='';
+  [...DEF,...cos].forEach(n=>{const b=document.createElement('button');b.className='ch';b.textContent=n;b.onclick=()=>set(n);
+   if(cos.includes(n)){const r=document.createElement('s');r.textContent='×';r.title='Remover atalho';r.onclick=ev=>{ev.stopPropagation();cos=cos.filter(c=>c!==n);saveCos();draw()};b.append(r)}w.append(b)});
+  const sv=document.createElement('button');sv.className='ch sv';sv.textContent='Salvar atalho';
+  sv.onclick=()=>{const n=inp.value.trim();if(n&&![...DEF,...cos].includes(n)){cos.push(n);saveCos();draw()}};w.append(sv)};
+ draw();return w;
+}
+let miss=[];
+function gen(){
+ miss=[];
+ $('#out').value=cur.tx.replace(/\{(\w)\}/g,(_,k)=>{const v=(V[k]||'').trim();if(v)return v;miss.push(L[k]);return `(${L[k]})`});
+}
+function openM(c,b){
+ cur={tx:b[2],k:c.t+(b[1]=='na'?'':', '+b[0].toLowerCase())+' ('+K[c.k][0]+')'};
+ const dl=$('#dlg');dl.style.setProperty('--h',K[c.k][1]);
+ $('#mt').textContent=c.t+(b[1]=='na'?'':', '+b[0].toLowerCase());$('#ms').textContent=K[c.k][0];
+ const f=$('#mf');f.innerHTML='';
+ b[3].forEach(k=>{
+  const w=document.createElement('div');w.className='fld';
+  w.innerHTML=`<label for="f${k}">${L[k]}</label><input id="f${k}" autocomplete="off" placeholder="${PH[k]}"${k=='p'?' list="pl"':''}${k=='c'?' inputmode="numeric"':''}>`;
+  const i=w.querySelector('input');i.value=V[k]||'';i.oninput=()=>{V[k]=i.value;gen()};
+  f.append(w);if(k=='e')w.append(chips(i));
+ });
+ gen();dl.showModal();
+ const fi=f.querySelector('input');if(fi)fi.focus();
+}
+const close=()=>$('#dlg').close();
+$('#x').onclick=$('#cn').onclick=close;
+$('#dlg').addEventListener('click',e=>{if(e.target.id=='dlg')close()});
+$('#cp').onclick=async()=>{
+ const ok=await copy($('#out').value,miss.length?'Copiado, mas falta preencher: '+miss.join(', '):'Texto copiado');
+ if(ok){addH($('#out').value,cur.k);close()}
+};
+async function copy(t,msg){
+ let ok=false;
+ try{await navigator.clipboard.writeText(t);ok=true}catch(e){
+  const a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;opacity:0';document.body.append(a);a.select();
+  try{ok=document.execCommand('copy')}catch(_){}a.remove();
+ }
+ toast(ok?msg:'Não foi possível copiar. Selecione o texto e use Ctrl+C.');return ok;
+}
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2800)}
+function renderH(){
+ const l=$('#hl');l.innerHTML=hist.length?'':'<div class="empty">Nada copiado ainda.</div>';
+ hist.forEach(x=>{
+  const r=document.createElement('div');r.className='hi';
+  r.innerHTML='<div class="hm"><b></b><span></span></div><p></p>';
+  r.querySelector('b').textContent=x.k;
+  r.querySelector('span').textContent=new Date(x.d).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+  r.querySelector('p').textContent=x.t;
+  const b=document.createElement('button');b.className='sm';b.textContent='Copiar de novo';b.onclick=()=>copy(x.t,'Texto copiado');
+  r.append(b);l.append(r);
+ });
+}
+$('#hb').onclick=()=>{renderH();$('#hd').showModal()};
+$('#hx').onclick=$('#hk').onclick=()=>$('#hd').close();
+$('#hc').onclick=()=>{hist=[];saveH();renderH()};
+$('#hd').addEventListener('click',e=>{if(e.target.id=='hd')e.target.close()});
+build();
+</script>
 </body>
 </html>
